@@ -2,17 +2,21 @@ package main
 
 import "fmt"
 
-type Student struct {
-	name, matric_no string
-	cgpa            float64
+type Person struct {
+	name string
+	age int
+	job string
+	salary int
+}
+
+func (p Person) getDesc() (desc string) {
+	desc = fmt.Sprintf("Name: %s | Age: %d | Job: %s | Monthly salary: $%d", p.name, p.age, p.job, p.salary)
+	return
 }
 
 func main() {
-	stud1 := Student{"Blessing", "GLY/2018/030", 4.34}
-	stud1.name = "Ewuola Blessing"
-	stud2 := Student{cgpa: 3.56, name: "Ocan", matric_no: "GLY/1976/016"}
-	stud_new := Student{}
-	p_stud := &Student{"Tolu", "GLY/2018/027", 4.16}
-	p_stud.cgpa = 4.99
-	fmt.Println(stud1.name, stud2, stud_new, p_stud.cgpa)
+	var person1 = Person{name: "Tiskae", age: 23, job: "Software Developer", salary: 2300}
+	person2 := Person{"Tiwu", 23, "Backend Engineer", 1500}
+
+	fmt.Println(person1.getDesc(), person2.getDesc())
 }
