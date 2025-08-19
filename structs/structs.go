@@ -4,7 +4,7 @@ import "fmt"
 
 type Student struct {
 	name, matric_no string
-	cgpa float64
+	cgpa            float64
 }
 
 func main() {
