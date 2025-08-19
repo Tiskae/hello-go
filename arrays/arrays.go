@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func main () {
+func main() {
 	var best_five [5]string
 	best_five[0] = "Lamborghini Aventador SVJ"
 	best_five[1] = "Pagani Zonda"
@@ -30,9 +30,9 @@ func main () {
 
 	// Slice defaults - all are equivalent
 	slice := best_five[0:5]
-	slice = best_five[0:] 
-	slice = best_five[:5] 
-	slice = best_five[:] 
+	slice = best_five[0:]
+	slice = best_five[:5]
+	slice = best_five[:]
 
 	fmt.Println(slice)
 
@@ -59,7 +59,7 @@ func main () {
 	board[2][0] = "O"
 	board[2][2] = "X" // X wins
 
-	for i:= 0; i < len(board); i++ {
+	for i := 0; i < len(board); i++ {
 		fmt.Printf("%s\n", strings.Join(board[i], " "))
 	}
 }
