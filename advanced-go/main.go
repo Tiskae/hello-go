@@ -11,27 +11,53 @@ var (
 	ErrTruckNotFound  = errors.New("truck not found")
 )
 
-type Truck struct {
-	id string
+type Truck interface {
+	LoadCargo() error
+	UnloadCargo() error
 }
 
-func (t Truck) loadCargo() error {
+type NormalTruck struct {
+	id string
+	cargo int
+}
+
+// In struct methods, instruct methods (pun intended) to take pointers when
+// you intend to change a property of the original struct on the fly  ...
+func (t *NormalTruck) LoadCargo() error {
+	t.cargo += 1
 	return nil
 }
 
-func (t Truck) unloadCargo() error {
+func (t *NormalTruck) UnloadCargo() error {
+	t.cargo = 0
+	return nil
+}
+
+type ElectricTruck struct {
+	id string
+	cargo int
+	battery float64
+}
+
+func (e *ElectricTruck) LoadCargo() error {
+	e.cargo += 1
+	e.battery -= 2
+	return nil
+}
+
+func (e *ElectricTruck) UnloadCargo() error {
+	e.cargo = 0
+	e.battery -= 1
 	return nil
 }
 
 // processTruck handles the loading and unloading of a truck.
 func processTruck(truck Truck) error {
-	fmt.Printf("Processing truck: %s\n", truck.id)
-
-	if err := truck.loadCargo(); err != nil {
+	if err := truck.LoadCargo(); err != nil {
 		return fmt.Errorf("error loading cargo: %w", err)
 	}
 
-	if err := truck.unloadCargo(); err != nil {
+	if err := truck.UnloadCargo(); err != nil {
 		return fmt.Errorf("error unloading cargo: %w", err)
 	}
 
@@ -39,21 +65,19 @@ func processTruck(truck Truck) error {
 }
 
 func main() {
-	trucks := []Truck{
-		{id: "Truck-1"},
-		{id: "Truck-2"},
-		{id: "Truck-3"},
+	nt := NormalTruck{id: "Normal-truck-1", cargo: 25}
+	et := ElectricTruck{id: "Electric-truck-1", cargo: 11, battery: 85}
+
+	err := processTruck(&nt)
+	if err != nil {
+		log.Fatal("Error processing normal truck", err)
 	}
 
-	for _, truck := range trucks {
-		fmt.Printf("Truck %s arrived.\n", truck.id)
-
-		if err := processTruck(truck); err != nil {
-			if errors.Is(err, ErrTruckNotFound) {
-				log.Fatal("TRUE")
-			}
-			log.Fatalf("Error processing truck: %s", err)
-
-		}
+	err = processTruck(&et)
+	if err != nil {
+		log.Fatal("Error processing electric truck", err)
 	}
+
+	fmt.Printf("%+v \n", nt)
+	fmt.Printf("%+v \n", et)
 }
