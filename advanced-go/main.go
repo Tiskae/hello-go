@@ -80,4 +80,22 @@ func main() {
 
 	fmt.Printf("%+v \n", nt)
 	fmt.Printf("%+v \n", et)
+
+	truckID := 42
+	truckIdReference := &truckID
+
+	truckID = 50
+
+	log.Println(truckID)
+	log.Println(*truckIdReference)
+
+	nt2 := NormalTruck{id: "20", cargo: 12}
+
+	fillTruckCargo(nil)
+
+	log.Println(nt2.cargo)
+}
+
+func fillTruckCargo(t *NormalTruck) {
+	t.cargo = 50
 }
