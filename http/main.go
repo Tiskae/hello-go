@@ -28,8 +28,8 @@ func main() {
 		Handler: mux,
 	}
 
-	mux.HandleFunc("/users", api.getUsersHandler)
-	mux.HandleFunc("/users", api.createUserHandler)
+	mux.HandleFunc("GET /users", api.getUsersHandler)
+	mux.HandleFunc("POST /users", api.createUserHandler)
 
 	log.Printf("Server running on %s", api.addr)
 	if err := srv.ListenAndServe(); err != nil {
