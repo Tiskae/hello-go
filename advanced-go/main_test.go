@@ -11,12 +11,12 @@ func TestMain(t *testing.T) {
 			nt := NormalTruck{id: "Normal-truck-1", cargo: 25}
 			et := ElectricTruck{id: "Electric-truck-1", cargo: 11, battery: 85}
 
-			err := processTruck(&nt)
+			err := processTruck(nil, &nt)
 			if err != nil {
 				log.Fatal("Error processing normal truck", err)
 			}
 
-			err = processTruck(&et)
+			err = processTruck(nil, &et)
 			if err != nil {
 				t.Fatal("Error processing electric truck", err)
 			}
